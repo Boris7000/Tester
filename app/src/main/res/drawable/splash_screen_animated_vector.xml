@@ -1,0 +1,21 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/splash_screen_vector">
+
+    <target
+        android:name="heart"
+        android:animation="@animator/size_x_grow"/>
+
+    <target
+        android:name="heart"
+        android:animation="@animator/size_y_grow"/>
+
+    <target
+        android:name="heart"
+        android:animation="@animator/translate_x_grow"/>
+
+    <target
+        android:name="heart"
+        android:animation="@animator/translate_y_grow"/>
+
+</animated-vector>

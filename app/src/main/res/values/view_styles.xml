@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextButton">
+        <item name="android:textAppearance">@style/ButtonTextAppearance</item>
+        <item name="shapeAppearanceOverlay">@style/ChildShapeAppearance</item>
+    </style>
+
+    <style name="TextButton.PrimaryButton">
+        <item name="text_color">?attr/colorOnPrimary</item>
+        <item name="disabled_text_color">?attr/colorOnPrimaryDisabled</item>
+        <item name="background_color">?attr/colorPrimary</item>
+        <item name="disabled_background_color">?attr/colorPrimaryDisabled</item>
+        <item name="icon_start_color">?attr/colorOnPrimary</item>
+        <item name="disabled_icon_start_color">?attr/colorOnPrimaryDisabled</item>
+        <item name="icon_end_color">?attr/colorOnPrimary</item>
+        <item name="disabled_icon_end_color">?attr/colorOnPrimaryDisabled</item>
+    </style>
+
+    <style name="TextButton.SecondaryButton">
+        <item name="text_color">?attr/colorOnSecondaryContainer</item>
+        <item name="disabled_text_color">?attr/colorOnSecondaryContainerDisabled</item>
+        <item name="background_color">?attr/colorSecondaryContainer</item>
+        <item name="disabled_background_color">?attr/colorSecondaryContainerDisabled</item>
+        <item name="icon_start_color">?attr/colorOnSecondaryContainer</item>
+        <item name="disabled_icon_start_color">?attr/colorOnSecondaryContainerDisabled</item>
+        <item name="icon_end_color">?attr/colorOnSecondaryContainer</item>
+        <item name="disabled_icon_end_color">?attr/colorOnSecondaryContainerDisabled</item>
+    </style>
+
+</resources>

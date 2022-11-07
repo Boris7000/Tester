@@ -1,0 +1,4 @@
+rootProject.name = "Tester"
+include ':app'
+include ':miracle-engine'
+include ':miracle-buttons'
