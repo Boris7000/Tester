@@ -41,11 +41,11 @@ public class FragmentTestsList extends BaseRecyclerFragment {
 
     private final ActivityResultLauncher<Intent> intentActivityResultLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result -> {
-                Log.d("TAG", result.toString());
+                //Log.d("TAG", result.toString());
                 if(result.getResultCode() == Activity.RESULT_OK) {
                     if(result.getData()!=null) {
                         Intent data = result.getData();
-                        Log.d("TAG", data.getData().toString());
+                        //Log.d("TAG", data.getData().toString());
                         Activity activity = getActivity();
                         if(activity!=null){
                             try {
@@ -148,9 +148,9 @@ public class FragmentTestsList extends BaseRecyclerFragment {
                         }
 
                     }
-                } else {
-                    Log.d("TAG", "something error");
-                }
+                } //else {
+                    //Log.d("TAG", "something error");
+                //}
             });
 
     @Override
