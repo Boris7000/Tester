@@ -15,6 +15,7 @@
 
     <string name="score">Баллы</string>
     <string name="score_div">%d/%d</string>
+    <string name="complete_time">Выполнен: %s</string>
 
     <string name="error_on_loading">Произошла ошибка при загрузке.</string>
     <string name="select_multiple_answer">Выберите один или более правильных ответов:</string>

@@ -75,7 +75,6 @@ public class FragmentTestsList extends BaseRecyclerFragment {
                                 e.printStackTrace();
                             }
                         }
-
                     }
                 } else {
                     Activity activity = getActivity();

@@ -40,7 +40,7 @@ public class TestDialog extends MiracleBottomDialog {
 
         if(test.getTestResult()!=null){
             subtitle.setVisibility(View.VISIBLE);
-            subtitle.setText("Пройден "+ TimeUtil.getOnlineDateString(context, test.getTestResult().getEndTime()/1000));
+            subtitle.setText(context.getString(R.string.complete_time, TimeUtil.getOnlineDateString(context, test.getTestResult().getEndTime()/1000)));
             miracleButton = (TextViewButton) inflater.inflate(R.layout.dialog_button_stub, linearLayout, false);
             miracleButton.setText(context.getString(R.string.remove_test_result));
             miracleButton.setIconStartImageResource(R.drawable.ic_text_doc_28);

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class TestsAdapter extends MiracleInstantLoadAdapter {
 
     @Override
-    public void onLoading() throws Exception {
+    public void onLoading() {
 
         ArrayList<ItemDataHolder> holders = getItemDataHolders();
 
@@ -50,6 +50,4 @@ public class TestsAdapter extends MiracleInstantLoadAdapter {
         arrayMap.put(TYPE_ADD_NEW_TEST, new AddNewTestViewHolder.Fabric());
         return arrayMap;
     }
-
-
 }
