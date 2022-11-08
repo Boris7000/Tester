@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -23,13 +23,10 @@ import com.miracle.engine.fragment.base.BaseRecyclerFragment;
 import com.miracle.tester.R;
 import com.miracle.tester.adapter.TestsAdapter;
 import com.miracle.tester.model.Test;
-import com.miracle.tester.model.TestTask;
 import com.miracle.tester.util.StorageUtil;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -59,77 +56,9 @@ public class FragmentTestsList extends BaseRecyclerFragment {
                                 XSSFSheet mySheet = myWorkBook.getSheetAt(0);
                                 // Get iterator to all the rows in current sheet
 
-                                String title = "";
-                                ArrayList<TestTask> tasks = new ArrayList<>();
-                                ArrayList<Integer> rightAnswers = new ArrayList<>();
-                                ArrayList<String> answers;
-                                String question = "";
+                                Test test = new Test(mySheet);
 
-                                int rowCounter = 0;
-                                for (Row row : mySheet) {
-                                    if(rowCounter==0){
-                                        for (Cell cell : row) {
-                                            if(cell.getCellType()==Cell.CELL_TYPE_STRING){
-                                                title = cell.getStringCellValue();
-                                                break;
-                                            }
-                                        }
-                                    } else {
-                                        int cellCounter = 0;
-                                        boolean ra = rowCounter%2==1;
-                                        if (ra){
-                                            rightAnswers = new ArrayList<>();
-                                            boolean fromStart = false;
-                                            int startFrom = 2;
-                                            for (Cell cell : row) {
-                                                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                                    if(!fromStart) {
-                                                        if (cell.getStringCellValue().equals("{+}") || cell.getStringCellValue().equals("{-}")) {
-                                                            fromStart = true;
-                                                            startFrom = cellCounter;
-                                                        }
-                                                    }
-                                                    if (cell.getStringCellValue().equals("{+}")) {
-                                                        rightAnswers.add(cellCounter-startFrom);
-                                                    }
-                                                }
-                                                cellCounter++;
-                                            }
-                                        } else {
-                                            answers = new ArrayList<>();
-                                            for (Cell cell : row) {
-                                                if(cellCounter==1){
-                                                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                                        question = cell.getStringCellValue();
-                                                    }
-                                                } else {
-                                                    if(cellCounter>1) {
-                                                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                                            answers.add(cell.getStringCellValue());
-                                                        }
-                                                    }
-                                                }
-                                                cellCounter++;
-                                            }
-
-                                            TestTask testTask = new TestTask(question, answers, rightAnswers);
-                                            tasks.add(testTask);
-
-                                            /*
-                                            Log.d("TAG", "right answers: "+rightAnswers);
-                                            Log.d("TAG", "question: "+question);
-                                            Log.d("TAG", "answers: "+answers);
-                                            Log.d("TAG", "--------------------------------- ");
-                                            */
-
-
-                                        }
-                                    }
-                                    rowCounter++;
-                                }
                                 pkg.close(); // gracefully closes the underlying zip file
-
-                                Test test = new Test(title, tasks);
 
                                 StorageUtil storageUtil = StorageUtil.get();
                                 if(storageUtil.addNewTestAndSave(test)){
@@ -148,9 +77,13 @@ public class FragmentTestsList extends BaseRecyclerFragment {
                         }
 
                     }
-                } //else {
+                } else {
+                    Activity activity = getActivity();
+                    if(activity!=null) {
+                        Toast.makeText(activity, R.string.error_on_loading, Toast.LENGTH_SHORT);
+                    }
                     //Log.d("TAG", "something error");
-                //}
+                }
             });
 
     @Override

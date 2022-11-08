@@ -7,6 +7,10 @@ import android.os.Parcelable;
 
 import com.miracle.engine.adapter.holder.ItemDataHolder;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -25,6 +29,78 @@ public class Test implements ItemDataHolder, Parcelable, Serializable {
         this.title = in.readString();
         this.tasks = in.createTypedArrayList(TestTask.CREATOR);
         this.testResult = in.readParcelable(TestResult.class.getClassLoader());
+    }
+
+    public Test(XSSFSheet sheet){
+        String title = "";
+        tasks = new ArrayList<>();
+
+        int rowCounter = 0;
+        for (Row row : sheet) {
+            if(rowCounter==0){
+                for (Cell cell : row) {
+                    if(cell.getCellType()==Cell.CELL_TYPE_STRING){
+                        title = cell.getStringCellValue();
+                        break;
+                    }
+                }
+            } else {
+                int cellCounter = 0;
+                boolean ra = rowCounter%2==1;
+                if (ra){
+                    String question = "";
+                    ArrayList<Integer> rightAnswers = new ArrayList<>();
+                    ArrayList<String> answers = new ArrayList<>();
+                    boolean findStart = false;
+                    int startFrom = 2;
+                    for (Cell cell : row) {
+                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                            if (cell.getStringCellValue().equals("{+}") || cell.getStringCellValue().equals("{-}")) {
+                                if(!findStart) {
+                                    findStart = true;
+                                    startFrom = cellCounter;
+                                    Row row1 = sheet.getRow(rowCounter+1);
+                                    if(row1!=null){
+                                        if(startFrom-1>=0){
+                                            Cell cell1 = row1.getCell(startFrom-1);
+                                            if(cell1.getCellType() == Cell.CELL_TYPE_STRING) {
+                                                question = cell1.getStringCellValue();
+                                            }
+                                        }
+                                    }
+                                }
+                                if (cell.getStringCellValue().equals("{+}")) {
+                                    rightAnswers.add(cellCounter-startFrom);
+                                }
+                                Row row1 = sheet.getRow(rowCounter+1);
+                                if(row1!=null){
+                                    Cell cell1 = row1.getCell(cellCounter);
+                                    if(cell1!=null){
+                                        answers.add(cell1.getStringCellValue());
+                                    }
+                                }
+                            }
+                        }
+                        cellCounter++;
+                    }
+
+                    if(!answers.isEmpty()&&!rightAnswers.isEmpty()&&!question.isEmpty()) {
+                        TestTask testTask = new TestTask(question, answers, rightAnswers);
+                        tasks.add(testTask);
+
+                        /*
+                        Log.d("TAG", "right answers: " + rightAnswers);
+                        Log.d("TAG", "question: " + question);
+                        Log.d("TAG", "answers: " + answers);
+                        Log.d("TAG", "--------------------------------- ");
+                         */
+                    }
+                }
+            }
+            rowCounter++;
+        }
+
+        this.title = title;
     }
 
     public String getTitle() {
