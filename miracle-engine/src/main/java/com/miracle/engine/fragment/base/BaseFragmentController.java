@@ -20,6 +20,7 @@ public abstract class BaseFragmentController extends MiracleFragmentController {
     private AppBarLayout appBarLayout;
     private Toolbar toolBar;
     private TextView title;
+    private View searchButton;
 
     protected BaseFragmentController(IMiracleFragment miracleFragment) {
         super(miracleFragment);
@@ -38,12 +39,16 @@ public abstract class BaseFragmentController extends MiracleFragmentController {
         appBarLayout = rootView.findViewById(R.id.appbarlayout);
         toolBar = rootView.findViewById(R.id.toolbar);
         title = rootView.findViewById(R.id.title);
+        searchButton = rootView.findViewById(R.id.searchBar);
     }
 
     @Override
     public void initViews(){
         if(appBarLayout!=null) {
             appBarLayout.setOnClickListener(view -> getMiracleFragment().scrollToTop());
+        }
+        if(searchButton!=null) {
+            searchButton.setOnClickListener(view -> baseFragment.onSearchButtonClicked());
         }
     }
 

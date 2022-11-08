@@ -86,4 +86,7 @@ public abstract class BaseListFragment extends ListFragment implements IBaseFrag
     public String requestTitleText() {
         return "";
     }
+
+    @Override
+    public void onSearchButtonClicked() {}
 }

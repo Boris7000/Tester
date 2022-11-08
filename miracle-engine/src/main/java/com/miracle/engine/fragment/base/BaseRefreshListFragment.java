@@ -87,4 +87,6 @@ public abstract class BaseRefreshListFragment extends RefreshListFragment implem
         return "";
     }
 
+    @Override
+    public void onSearchButtonClicked() {}
 }

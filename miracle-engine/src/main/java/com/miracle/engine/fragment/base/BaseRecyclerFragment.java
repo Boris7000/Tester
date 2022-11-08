@@ -93,6 +93,9 @@ public abstract class BaseRecyclerFragment extends RecyclerFragment implements I
     }
 
     @Override
+    public void onSearchButtonClicked() {}
+
+    @Override
     public void onRecyclerAdapterStateChange(int state) {
         switch (state){
             case SATE_LOADING_ERROR:{

@@ -126,4 +126,6 @@ public abstract class BaseTabsFragment extends TabsFragment implements IBaseFrag
         }
     }
 
+    @Override
+    public void onSearchButtonClicked() {}
 }

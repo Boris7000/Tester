@@ -24,4 +24,6 @@ public interface IBaseFragment {
 
     String requestTitleText();
 
+    void onSearchButtonClicked();
+
 }
