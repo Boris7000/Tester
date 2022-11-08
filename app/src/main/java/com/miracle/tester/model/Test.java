@@ -35,6 +35,10 @@ public class Test implements ItemDataHolder, Parcelable, Serializable {
         String title = "";
         tasks = new ArrayList<>();
 
+        String question;
+        ArrayList<Integer> rightAnswers = new ArrayList<>();
+        ArrayList<String> answers;
+
         int rowCounter = 0;
         for (Row row : sheet) {
             if(rowCounter==0){
@@ -45,55 +49,57 @@ public class Test implements ItemDataHolder, Parcelable, Serializable {
                     }
                 }
             } else {
-                int cellCounter = 0;
+
                 boolean ra = rowCounter%2==1;
                 if (ra){
-                    String question = "";
-                    ArrayList<Integer> rightAnswers = new ArrayList<>();
-                    ArrayList<String> answers = new ArrayList<>();
+
+                    rightAnswers = new ArrayList<>();
+
                     boolean findStart = false;
-                    int startFrom = 2;
+                    int startFrom = row.getFirstCellNum();
+
                     for (Cell cell : row) {
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             if (cell.getStringCellValue().equals("{+}") || cell.getStringCellValue().equals("{-}")) {
                                 if(!findStart) {
                                     findStart = true;
-                                    startFrom = cellCounter;
-                                    Row row1 = sheet.getRow(rowCounter+1);
-                                    if(row1!=null){
-                                        if(startFrom-1>=0){
-                                            Cell cell1 = row1.getCell(startFrom-1);
-                                            if(cell1.getCellType() == Cell.CELL_TYPE_STRING) {
-                                                question = cell1.getStringCellValue();
-                                            }
-                                        }
-                                    }
+                                    startFrom = cell.getColumnIndex();
                                 }
                                 if (cell.getStringCellValue().equals("{+}")) {
-                                    rightAnswers.add(cellCounter-startFrom);
+                                    rightAnswers.add(cell.getColumnIndex()-startFrom);
                                 }
-                                Row row1 = sheet.getRow(rowCounter+1);
-                                if(row1!=null){
-                                    Cell cell1 = row1.getCell(cellCounter);
-                                    if(cell1!=null){
-                                        answers.add(cell1.getStringCellValue());
-                                    }
-                                }
+
                             }
                         }
-                        cellCounter++;
                     }
+                } else {
+                    question = "";
+                    answers = new ArrayList<>();
+
+                    boolean firstCells = true;
+                    for (Cell cell:row){
+                        if(firstCells) {
+                            if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                firstCells = false;
+                                question = cell.getStringCellValue();
+                            }
+                        } else {
+                            if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                answers.add(cell.getStringCellValue());
+                            }
+                        }
+                    }
+
+                    /*
+                    Log.d("TAG", "right answers: " + rightAnswers);
+                    Log.d("TAG", "question: " + question);
+                    Log.d("TAG", "answers: " + answers);
+                    Log.d("TAG", "--------------------------------- ");
+                    */
 
                     if(!answers.isEmpty()&&!rightAnswers.isEmpty()&&!question.isEmpty()) {
                         TestTask testTask = new TestTask(question, answers, rightAnswers);
                         tasks.add(testTask);
-
-                        /*
-                        Log.d("TAG", "right answers: " + rightAnswers);
-                        Log.d("TAG", "question: " + question);
-                        Log.d("TAG", "answers: " + answers);
-                        Log.d("TAG", "--------------------------------- ");
-                         */
                     }
                 }
             }

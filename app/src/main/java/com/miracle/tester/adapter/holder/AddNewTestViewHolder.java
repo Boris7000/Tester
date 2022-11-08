@@ -19,7 +19,6 @@ import com.miracle.engine.adapter.holder.ItemDataHolder;
 import com.miracle.engine.adapter.holder.MiracleViewHolder;
 import com.miracle.engine.adapter.holder.ViewHolderFabric;
 import com.miracle.engine.context.ContextExtractor;
-import com.miracle.tester.MainActivity;
 import com.miracle.tester.R;
 import com.miracle.tester.fragment.FragmentTestsList;
 
@@ -29,25 +28,11 @@ public class AddNewTestViewHolder extends MiracleViewHolder {
         super(itemView);
         TextViewButton textViewButton = (TextViewButton) itemView;
         textViewButton.setOnClickListener(view -> {
-            //TODO добавить открытие из файла
-            /*
-            Test test = generateFakeTest();
-            StorageUtil storageUtil = StorageUtil.get();
-            if(storageUtil.addNewTestAndSave(test)){
-                MiracleAdapter adapter = getMiracleAdapter();
-                ArrayList<ItemDataHolder> itemDataHolders = adapter.getItemDataHolders();
-                itemDataHolders.add(1,test);
-                adapter.notifyItemInserted(1);
-            }
-             */
-
-
             Activity activity = ContextExtractor.extractActivity(view.getContext());
             if(activity!=null){
                 if(android.os.Build.VERSION.SDK_INT<=Build.VERSION_CODES.R) {
                     if (checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         Log.d("TAG", "Permission is granted");
-                        //File write logic here
                         openXlsxFile((FragmentTestsList) getMiracleAdapter().getMiracleFragment());
                     } else {
                         Log.d("TAG", "Permission is not granted");
