@@ -17,7 +17,6 @@ import com.miracle.engine.activity.tabs.TabsActivity;
 import com.miracle.engine.activity.tabs.TabsActivityController;
 import com.miracle.engine.fragment.FragmentFabric;
 import com.miracle.engine.view.TabsFragmentContainer;
-import com.miracle.tester.fragment.FragmentMisc;
 import com.miracle.tester.fragment.FragmentTestsList;
 import com.miracle.tester.util.StorageUtil;
 
@@ -44,7 +43,6 @@ public class MainActivity extends TabsActivity {
     public ArrayMap<Integer, FragmentFabric> loadTabs() {
         ArrayMap<Integer, FragmentFabric> fabrics = new ArrayMap<>();
         fabrics.put(R.id.tab_tests, new FragmentTestsList.Fabric());
-        fabrics.put(R.id.tab_misc, new FragmentMisc.Fabric());
         return fabrics;
     }
 
@@ -52,7 +50,6 @@ public class MainActivity extends TabsActivity {
     public ArrayMap<Integer, FragmentFabric> getErrorTabs() {
         ArrayMap<Integer, FragmentFabric> fabrics = new ArrayMap<>();
         fabrics.put(R.id.tab_tests, new FragmentTestsList.Fabric());
-        fabrics.put(R.id.tab_misc, new FragmentMisc.Fabric());
         return fabrics;
     }
 
